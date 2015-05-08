@@ -43,7 +43,3 @@ Now wait 2.1 seconds.
 
     >>> client.stats("q")
     {'depth': 1, 'dequeued': 3, 'enqueued': 3, 'timeouts': 1}
-
-We see a `timeout`. An attempt to complete our message will fail:
-
-    # TODO(miku): complete
