@@ -2,7 +2,31 @@ language: python
 python:
   - "2.7"
 install: "pip install -r requirements.txt"
+sudo: required
+
 before_script:
-  - "./test/bin/queued &"
+  - "sudo apt-get update"
+  - "sudo apt-get install -y python-software-properties git wget build-essential"
+
+  - "sudo add-apt-repository -y ppa:duh/golang"
+  - "sudo apt-get update"
+  - "sudo apt-get install -y golang"
+  - "mkdir ./go"
+  - "export GOPATH=./go"
+
+  - "wget https://leveldb.googlecode.com/files/leveldb-1.13.0.tar.gz --no-check-certificate"
+  - "tar -zxvf leveldb-1.13.0.tar.gz"
+  - "cd leveldb-1.13.0; make"
+  - "sudo cp -r leveldb-1.13.0/include/leveldb /usr/include/"
+  - "sudo cp leveldb-1.13.0/libleveldb.* /usr/lib/"
+
+  - "mkdir -p ./queued/src"
+  - "git clone https://github.com/scttnlsn/queued.git ./queued/src"
+  - "go get github.com/jmhodges/levigo"
+  - "go get github.com/gorilla/mux"
+  - "cd ./queued/src; make"
+
+  - "./queued/src/build/queued &"
   - "sleep 2"
+
 script: nosetests -a '!notravis'
