@@ -1,7 +1,7 @@
 README
 ======
 
-Python client for HTTP message [queued](https://github.com/scttnlsn/queued).
+Python client for HTTP message queue [Queued](https://github.com/scttnlsn/queued).
 
 Usage
 -----
@@ -34,8 +34,8 @@ Enqueue another message:
 
     >>> loc = client.enqueue("q", "my message with timeout")
 
-But dequeue with timeout (in seconds). If the message is not completed within `timeout`,
-it will be re-enqueued.
+But dequeue with timeout (given in seconds). If the message is not completed within `timeout`,
+it will be enqueued again.
 
     >>> client.dequeue("q", timeout=2)
 
