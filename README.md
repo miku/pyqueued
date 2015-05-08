@@ -15,14 +15,14 @@ Get a client.
 Enqueue a message:
 
     >>> loc = client.enqueue("q", "my message")
-    >>> print(loc)
-    http://localhost:5353/q/155
+    >>> loc
+    'http://localhost:5353/q/155'
 
 Get a message. Without any timeout the item is marked as completed when dequeued.
 
     >>> msg, loc = client.dequeue("q")
-    >>> print(msg)
-    my message
+    >>> msg
+    'my message'
 
 Queue is empty now, so a new dequeue will fail:
 
