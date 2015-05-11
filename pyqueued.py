@@ -1,4 +1,4 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
 
 import json
 import os
@@ -25,7 +25,7 @@ class Client:
         """
         r = requests.post(self.queue_url(queue), data=msg)
         if not r.status_code == 201:
-            raise RuntimeError("enqueue failed: %s" % r)
+            raise RuntimeError("enqueue failed: %s, %s" % (r, r.text))
         return r.headers['Location']
 
     def dequeue(self, queue, wait=None, timeout=None):
@@ -44,7 +44,7 @@ class Client:
         """
         r = requests.delete(os.path.join(self.queue_url(queue), str(id)))
         if not r.status_code == 204:
-            raise RuntimeError("complete failed: %s" % r)
+            raise RuntimeError("complete failed: %s, %s" % (r, r.text))
 
     def complete_by_url(self, url):
         """
@@ -53,7 +53,7 @@ class Client:
         queue, id = url.split('/')[-2:]
         r = requests.delete(os.path.join(self.queue_url(queue), id))
         if not r.status_code == 204:
-            raise RuntimeError("complete failed: %s" % r)
+            raise RuntimeError("complete failed: %s, %s" % (r, r.text))
 
     def get(self, queue, id):
         """
@@ -61,7 +61,7 @@ class Client:
         """
         r = requests.get(os.path.join(self.queue_url(queue), id))
         if not r.status_code == 200:
-            raise RuntimeError("get failed: %s" % r)
+            raise RuntimeError("get failed: %s, %s" % (r, r.text))
         return r.text
 
     def stats(self, queue):
@@ -70,5 +70,5 @@ class Client:
         """
         r = requests.get(self.queue_url(queue))
         if not r.status_code == 200:
-            raise RuntimeError("stats failed: %s" % r)
+            raise RuntimeError("stats failed: %s, %s" % (r, r.text))
         return json.loads(r.text)
