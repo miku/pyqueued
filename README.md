@@ -3,6 +3,8 @@ README
 
 Python client for HTTP message queue [Queued](https://github.com/scttnlsn/queued).
 
+[![pypi version](http://img.shields.io/pypi/v/pyqueued.svg?style=flat)](https://pypi.python.org/pypi/pyqueued)
+
 Usage
 -----
 
