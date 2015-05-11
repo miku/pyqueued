@@ -18,13 +18,13 @@ Enqueue a message:
     >>> loc
     'http://localhost:5353/q/155'
 
-Get a message. Without any timeout the item is marked as completed when dequeued.
+Get the head of the queue. Without any timeout, the item is marked as completed when dequeued.
 
     >>> msg, loc = client.dequeue("q")
     >>> msg
     'my message'
 
-Queue is empty now, so a new dequeue will fail:
+THe queue is empty now, so another dequeue will fail:
 
     >>> msg, loc = client.dequeue("q")
     ...
@@ -38,8 +38,17 @@ But dequeue with timeout (given in seconds). If the message is not completed wit
 it will be enqueued again.
 
     >>> client.dequeue("q", timeout=2)
+    ('my message with timeout', 'http://localhost:5353/q/160')
 
 Now wait 2.1 seconds.
 
     >>> client.stats("q")
     {'depth': 1, 'dequeued': 3, 'enqueued': 3, 'timeouts': 1}
+
+The has message timed out and has been enqueued again. So we can actually dequeue it once more. But now we
+mark it completed in time.
+
+    >>> client.dequeue("q", timeout=2)
+    ('my message with timeout', 'http://localhost:5353/q/160')
+
+    >>> client.complete("q", "160")
