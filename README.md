@@ -32,23 +32,29 @@ THe queue is empty now, so another dequeue will fail:
 
 Enqueue another message:
 
-    >>> loc = client.enqueue("q", "my message with timeout")
+    >>> loc = client.enqueue("q", "another message")
 
 But dequeue with timeout (given in seconds). If the message is not completed within `timeout`,
 it will be enqueued again.
 
     >>> client.dequeue("q", timeout=2)
-    ('my message with timeout', 'http://localhost:5353/q/160')
-
-Now wait 2.1 seconds.
-
-    >>> client.stats("q")
-    {'depth': 1, 'dequeued': 3, 'enqueued': 3, 'timeouts': 1}
+    ('another message', 'http://localhost:5353/q/160')
 
 The has message timed out and has been enqueued again. So we can actually dequeue it once more. But now we
 mark it completed in time.
 
-    >>> client.dequeue("q", timeout=2)
+    >>> client.dequeue("q", timeout=20)
     ('my message with timeout', 'http://localhost:5353/q/160')
 
     >>> client.complete("q", "160")
+
+Alternatively, item can be completed by URL. To the last line have been written also as:
+
+    >>> client.complete_by_url('http://localhost:5353/q/160')
+
+----
+
+Stats about the queue:
+
+    >>> client.stats("q")
+    {'depth': 1, 'dequeued': 3, 'enqueued': 3, 'timeouts': 1}
