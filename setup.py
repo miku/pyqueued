@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-Python client for HTTP message queue [Queued](https://github.com/scttnlsn/queued).
+Python client for HTTP message queue Queued: https://github.com/scttnlsn/queued.
 
 Usage
 -----
