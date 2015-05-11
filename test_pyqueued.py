@@ -84,6 +84,22 @@ class TestClient(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             c.complete_by_url(location)
 
+    def test_complete_by_url_mismatch(self):
+        Q = random_queue_name()
+        c = pyqueued.Client()
+        location = c.enqueue(Q, "Hello")
+        c.dequeue(Q, timeout=1)
+        with self.assertRaises(RuntimeError):
+            c.complete_by_url('http://localhost:1111/q/123')
+
+    def test_complete_by_url_bad_input(self):
+        Q = random_queue_name()
+        c = pyqueued.Client()
+        location = c.enqueue(Q, "Hello")
+        c.dequeue(Q, timeout=1)
+        with self.assertRaises(ValueError):
+            c.complete_by_url('http://localhost:1111/q')
+
     def test_complete(self):
         Q = random_queue_name()
         c = pyqueued.Client()

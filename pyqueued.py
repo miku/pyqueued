@@ -51,6 +51,10 @@ class Client:
         Remove an item from a queue, given the items full url.
         """
         queue, id = url.split('/')[-2:]
+        hostport = url.split('/')[-3]
+        host, port = hostport.split(':')
+        if self.host != host or self.port != port:
+            raise RuntimeError('client hostport mistmatch')
         r = requests.delete(os.path.join(self.queue_url(queue), id))
         if not r.status_code == 204:
             raise RuntimeError("complete failed: %s, %s" % (r, r.text))
