@@ -64,7 +64,7 @@ Stats about the queue:
 from setuptools import setup
 
 setup(name='pyqueued',
-      version='0.1.2',
+      version='0.1.3',
       description='A client for queued.',
       long_description=__doc__,
       url='https://github.com/miku/pyqueued',

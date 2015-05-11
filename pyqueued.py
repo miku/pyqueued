@@ -4,7 +4,7 @@ import json
 import os
 import requests
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 class Client:
     """
