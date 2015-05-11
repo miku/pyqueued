@@ -12,7 +12,7 @@ decorator and some task templates.
 from setuptools import setup
 
 setup(name='pyqueued',
-      version='0.1.1',
+      version='0.1.2',
       description='A client for queued.',
       url='https://github.com/miku/pyqueued',
       author='Martin Czygan',

@@ -4,6 +4,8 @@ import json
 import os
 import requests
 
+__version__ = '0.1.2'
+
 class Client:
     """
     A Queued client object.
